@@ -11,6 +11,7 @@ namespace Server_Client
 {
     class Program
     {
+        public string[,] table = new string[3, 300];
         static void Main(string[] args)
         {
             TcpListener server = null;
@@ -39,13 +40,13 @@ namespace Server_Client
                 while (true)
                 {
 
-                    Console.Write("\nWaiting for a connection... ");
+                    Console.Write("\nОжидание соеденения... ");
 
                     // При появлении клиента добавляем в очередь потоков его обработку.
                     ThreadPool.QueueUserWorkItem(ObrabotkaZaprosa, server.AcceptTcpClient());
                     // Выводим информацию о подключении.
                     counter++;
-                    Console.Write("\nConnection №" + counter.ToString() + "!");
+                    Console.Write("\nСоеденение №" + counter.ToString() + "!");
 
                 }
             }
@@ -61,8 +62,69 @@ namespace Server_Client
             }
 
 
-            Console.WriteLine("\nHit enter to continue...");
+            Console.WriteLine("\nНажмите Enter чтобы продолжить...");
             Console.Read();
+        }
+        static void ObrabotkaZaprosa(object client_obj)
+        {
+            // Буфер для принимаемых данных.
+            Byte[] bytes = new Byte[256];
+            String data = null;
+
+            //Можно раскомментировать Thread.Sleep(1000); 
+            //Запустить несколько клиентов
+            //и наглядно увидеть как они обрабатываются в очереди. 
+            Thread.Sleep(1000);
+
+            TcpClient client = client_obj as TcpClient;
+
+            data = null;
+
+            // Получаем информацию от клиента
+            NetworkStream stream = client.GetStream();
+
+            int i;
+
+            // Принимаем данные от клиента в цикле пока не дойдём до конца.
+            while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
+            {
+                // Преобразуем данные в ASCII string.
+                data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
+
+                // Преобразуем строку к верхнему регистру.
+                // data = data.ToUpper();
+                Console.Write(data);
+
+                // Преобразуем полученную строку в массив Байт.
+                byte[] msg = System.Text.Encoding.ASCII.GetBytes(data);
+
+                // Отправляем данные обратно клиенту (ответ).
+                stream.Write(msg, 0, msg.Length);
+
+            }
+
+
+
+            // Закрываем соединение.
+            client.Close();
+
+
+        }
+        public void add_result(string game, string name, string balls)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < 300; j++)
+                {
+                    if (table[i, j] == null)
+                    {
+                        table[i, j] = game;
+                        table[i+1, j] = name;
+                        table[i+2, j] = balls;
+                        break;
+                    }
+                }
+            }
         }
     }
 }

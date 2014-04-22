@@ -2,6 +2,11 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server-Client", "Server-Client\Server-Client.csproj", "{A1FF92D4-DBFB-457F-AD4D-F7F92CFB373C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6A79C5EE-DB7B-47E7-9463-87377FEBF774} = {6A79C5EE-DB7B-47E7-9463-87377FEBF774}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{6A79C5EE-DB7B-47E7-9463-87377FEBF774}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +18,10 @@ Global
 		{A1FF92D4-DBFB-457F-AD4D-F7F92CFB373C}.Debug|x86.Build.0 = Debug|x86
 		{A1FF92D4-DBFB-457F-AD4D-F7F92CFB373C}.Release|x86.ActiveCfg = Release|x86
 		{A1FF92D4-DBFB-457F-AD4D-F7F92CFB373C}.Release|x86.Build.0 = Release|x86
+		{6A79C5EE-DB7B-47E7-9463-87377FEBF774}.Debug|x86.ActiveCfg = Debug|x86
+		{6A79C5EE-DB7B-47E7-9463-87377FEBF774}.Debug|x86.Build.0 = Debug|x86
+		{6A79C5EE-DB7B-47E7-9463-87377FEBF774}.Release|x86.ActiveCfg = Release|x86
+		{6A79C5EE-DB7B-47E7-9463-87377FEBF774}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
