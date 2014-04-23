@@ -70,6 +70,7 @@ namespace Server_Client
             // Буфер для принимаемых данных.
             Byte[] bytes = new Byte[256];
             String data = null;
+            string str = "";
 
             //Можно раскомментировать Thread.Sleep(1000); 
             //Запустить несколько клиентов
@@ -84,7 +85,7 @@ namespace Server_Client
             NetworkStream stream = client.GetStream();
 
             int i;
-
+            int kk = 11;
             // Принимаем данные от клиента в цикле пока не дойдём до конца.
             while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
             {
@@ -93,8 +94,14 @@ namespace Server_Client
 
                 // Преобразуем строку к верхнему регистру.
                 // data = data.ToUpper();
-                Console.Write(data);
 
+                for (int j = 11; j < data.Length-1; j++)
+                {
+                    str += data[j];
+                }
+
+                Console.Write(str);
+                
                 // Преобразуем полученную строку в массив Байт.
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(data);
 
