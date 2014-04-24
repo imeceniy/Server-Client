@@ -43,7 +43,7 @@ namespace Server_Client
                     Console.Write("\nОжидание соеденения... ");
 
                     // При появлении клиента добавляем в очередь потоков его обработку.
-                    ThreadPool.QueueUserWorkItem(ObrabotkaZaprosa, server.AcceptTcpClient());
+                    ThreadPool.QueueUserWorkItem(ProcessingRequest, server.AcceptTcpClient());
                     // Выводим информацию о подключении.
                     counter++;
                     Console.Write("\nСоеденение №" + counter.ToString() + "!");
@@ -65,13 +65,13 @@ namespace Server_Client
             Console.WriteLine("\nНажмите Enter чтобы продолжить...");
             Console.Read();
         }
-        static void ObrabotkaZaprosa(object client_obj)
+        static void ProcessingRequest(object client_obj)
         {
             // Буфер для принимаемых данных.
             Byte[] bytes = new Byte[256];
             String data = null;
             string str = "";
-
+            string[] commandProp;
             //Можно раскомментировать Thread.Sleep(1000); 
             //Запустить несколько клиентов
             //и наглядно увидеть как они обрабатываются в очереди. 
@@ -92,16 +92,20 @@ namespace Server_Client
                 // Преобразуем данные в ASCII string.
                 data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
 
-                // Преобразуем строку к верхнему регистру.
+                // Преобразуем строку к верхнему регистру для проверки есть ли передача в обе стороны.
                 // data = data.ToUpper();
-
-                for (int j = 11; j < data.Length-1; j++)
+                if (data.Contains("add_result"))
                 {
-                    str += data[j];
+                    for (int j = 11; j < data.Length-1; j++)
+                    {
+                        str += data[j];
+                    }
                 }
 
+                commandProp = str.Split(new char[] { ',' });
                 Console.Write(str);
-                
+
+
                 // Преобразуем полученную строку в массив Байт.
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(data);
 
