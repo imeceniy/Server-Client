@@ -101,6 +101,28 @@ namespace Server_Client
                         str += data[j];
                     }
                 }
+                else if (data.Contains("get_result"))
+                {
+                    for (int j = 11; j < data.Length - 1; j++)
+                    {
+                        str += data[j];
+                    }
+                }
+                else if (data.Contains("get_user_result"))
+                {
+                    for (int j = 61; j < data.Length - 1; j++)
+                    {
+                        str += data[j];
+                    }
+                }
+                else if (data.Contains("get_game_result"))
+                {
+                    for (int j = 16; j < data.Length - 1; j++)
+                    {
+                        str += data[j];
+                    }
+                }
+
 
                 commandProp = str.Split(new char[] { ',' });
                 Console.Write(str);
